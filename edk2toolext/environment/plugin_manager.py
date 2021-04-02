@@ -76,6 +76,10 @@ class PluginManager(object):
         logging.debug("Loading Plugin from %s", PyModulePath)
         try:
             with open(PyModulePath, "r") as plugin_file:
+                # setup python path for build modules
+                sp = os.path.dirname(os.path.realpath(PyModulePath))
+                sys.path.append(sp)
+
                 _module = imp.load_module(
                     "UefiBuild_Plugin_" + PluginDescriptor.descriptor["module"],
                     plugin_file,
